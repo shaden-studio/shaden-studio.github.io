@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaden Studio | Post-Production & Video Editing</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --surface-color: #16161a;
+            --surface-hover: #1f1f24;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo img {
+            height: 40px;
+            transition: var(--transition);
+        }
+
+        .logo:hover img {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:not(.btn)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:not(.btn):hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 5% 50px;
+            background: radial-gradient(circle at 50% 30%, rgba(99, 102, 241, 0.15) 0%, rgba(10, 10, 12, 1) 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0 auto 20px auto;
+            max-width: 900px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 10px 30px -10px var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px -10px var(--accent);
+            color: #fff;
+        }
+
+        .btn-social {
+            background: var(--surface-color);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-social:hover {
+            background: var(--surface-hover);
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.3);
+            color: var(--text-primary);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+
+        .portfolio {
+            padding: 80px 5%;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--surface-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.3);
+        }
+
+        .card-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.08);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-btn {
+            width: 65px;
+            height: 65px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #fff;
+            transform: scale(0.5);
+            transition: var(--transition);
+        }
+
+        .card:hover .play-btn {
+            transform: scale(1);
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card-category {
+            font-size: 14px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .testimonials {
+            padding: 100px 5%;
+            background: linear-gradient(to bottom, var(--bg-color), var(--surface-color));
+        }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .testi-card {
+            background: var(--bg-color);
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testi-card::before {
+            content: '\201C';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 120px;
+            font-family: sans-serif;
+            color: rgba(255,255,255,0.03);
+            line-height: 1;
+        }
+
+        .testi-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.2);
+        }
+
+        .testi-quote {
+            font-size: 18px;
+            color: var(--text-primary);
+            font-style: italic;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testi-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 22px;
+            color: #fff;
+        }
+
+        .testi-info h4 {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .testi-info p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .testi-info span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .contact-section {
+            padding: 100px 5%;
+            text-align: center;
+            background: var(--bg-color);
+        }
+
+        .contact-section h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .contact-section p {
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 5%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+            font-size: 14px;
+            background: var(--surface-color);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            padding: 20px;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-container {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--bg-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transform: translateY(30px) scale(0.98);
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal.active .modal-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: #ff3b30;
+            transform: rotate(90deg);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            text-align: center;
+            background: var(--surface-color);
+        }
+
+        .modal-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .modal-footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        @media(max-width: 900px) {
+            .portfolio-grid, .testi-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">
+            <img src="logo.PNG" alt="Shaden Studio" onerror="this.style.display='none'"> 
+            Shaden Studio
+        </a>
+        <div class="nav-links">
+            <a href="#portfolio">Work</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#contact" class="btn btn-primary" style="padding: 10px 24px;">Start Project</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div data-aos="fade-up" data-aos-duration="1000">
+            <h1>We craft videos that <span>hook & convert</span></h1>
+            <p>High-end post-production for YouTube creators and businesses. We turn your raw footage into engaging masterpieces that drive views and sales.</p>
+            <a href="#portfolio" class="btn btn-primary" style="margin-top: 10px;">
+                View Our Work <i class="fa-solid fa-arrow-down" style="margin-left: 8px;"></i>
+            </a>
+        </div>
+    </section>
+
+    <section class="portfolio" id="portfolio">
+        <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
+        
+        <div class="portfolio-grid">
+            
+            <div class="card" data-aos="fade-up" data-aos-delay="100" data-vid="Tjl6fQ0meJk" data-title="Automotive History Documentary" data-cat="Automotive">
+                <div class="card-img">
+                    <img src="maxresdefault.jpg" alt="Big Car">
+                    <div class="play-overlay">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="card-category">Automotive</span>
+                    <h3 class="card-title">Big Car</h3>
+                </div>
+            </div>
+
+            <div class="card" data-aos="fade-up" data-aos-delay="200" data-vid="En15nX1pmmA" data-title="Epic Travel Vlog Experience" data-cat="Travel">
+                <div class="card-img">
+                    <img src="maxresdefault (1).jpg" alt="Happy To Wander">
+                    <div class="play-overlay">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="card-category">Travel</span>
+                    <h3 class="card-title">Happy To Wander</h3>
+                </div>
+            </div>
+
+            <div class="card" data-aos="fade-up" data-aos-delay="300" data-vid="xjTI_EwoWGg" data-title="Personal Finance & Motivation" data-cat="Finance">
+                <div class="card-img">
+                    <img src="Video 2.jpg" alt="Make That Change">
+                    <div class="play-overlay">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="card-category">Finance</span>
+                    <h3 class="card-title">Make That Change</h3>
+                </div>
+            </div>
+
+            <div class="card" data-aos="fade-up" data-aos-delay="400" data-vid="ZRJqRl-Z3WA" data-title="Martial Arts Action Highlights" data-cat="Sports">
+                <div class="card-img">
+                    <img src="maxresdefault1.jpg" alt="Tae Kwon Do Fury">
+                    <div class="play-overlay">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="card-category">Sports</span>
+                    <h3 class="card-title">Tae Kwon Do Fury</h3>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title" data-aos="fade-up">Client Success</h2>
+        
+        <div class="testi-grid">
+            
+            <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
+                <p class="testi-quote">"Shaden Studio completely transformed our documentaries. The editing is top-notch, keeping our audience hooked from the first second to the last!"</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">B</div>
+                    <div class="testi-info">
+                        <h4>Big Car</h4>
+                        <p>Automotive Channel</p>
+                        <span>286,000 Subscribers</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
+                <p class="testi-quote">"Absolutely stunning post-production! They perfectly captured the vibe of our adventures. Highly recommended to any creator looking to level up."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">H</div>
+                    <div class="testi-info">
+                        <h4>Happy To Wander</h4>
+                        <p>Travel Channel</p>
+                        <span>202,000 Subscribers</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
+                <p class="testi-quote">"Our finance videos need to be dynamic to keep viewers engaged. Shaden Studio delivered exactly what we needed to grow our channel rapidly."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">M</div>
+                    <div class="testi-info">
+                        <h4>Make That Change</h4>
+                        <p>Finance Channel</p>
+                        <span>133,000 Subscribers</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card" data-aos="fade-up" data-aos-delay="400">
+                <p class="testi-quote">"The action looks so much better now. Fast turnarounds and incredible motion graphics that fit our extreme sports content perfectly."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">T</div>
+                    <div class="testi-info">
+                        <h4>Tae Kwon Do Fury</h4>
+                        <p>Sports Channel</p>
+                        <span>108,000 Subscribers</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div data-aos="zoom-in">
+            <h2>Ready to elevate your videos?</h2>
+            <p>Let's discuss your project and create high-quality content together.</p>
+            <div class="contact-buttons">
+                <a href="mailto:shaden.editors@gmail.com" class="btn btn-primary">
+                    <i class="fa-solid fa-envelope"></i> Email Us
+                </a>
+                <a href="https://t.me/shaden_nnn" target="_blank" class="btn btn-social">
+                    <i class="fa-brands fa-telegram"></i> Telegram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Shaden Studio. All Rights Reserved.</p>
+    </footer>
+
+    <div class="modal" id="videoModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div>
+                    <span id="modalCat" style="color: var(--accent); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;"></span>
+                    <h3 id="modalTitle" style="font-size: 22px; margin-top: 5px;"></h3>
+                </div>
+                <button class="modal-close" id="closeModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="video-wrapper">
+                <iframe id="modalIframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="modal-footer">
+                <a id="modalExternalLink" href="#" target="_blank">Відкрити відео на YouTube ↗</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50
+        });
+
+        const cards = document.querySelectorAll('.card');
+        const modal = document.getElementById('videoModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const iframe = document.getElementById('modalIframe');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalCat = document.getElementById('modalCat');
+        const externalLink = document.getElementById('modalExternalLink');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const videoId = card.getAttribute('data-vid');
+                const title = card.getAttribute('data-title');
+                const category = card.getAttribute('data-cat');
+
+                modalTitle.textContent = title;
+                modalCat.textContent = category;
+                
+                iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+                
+                externalLink.href = `https://youtu.be/${videoId}`;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            setTimeout(() => { iframe.src = ''; }, 400); 
+            document.body.style.overflow = 'auto'; 
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
