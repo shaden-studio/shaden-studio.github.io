@@ -49,6 +49,7 @@
             color: #fff;
         }
 
+        /* Navbar & Lang Switcher */
         nav {
             position: fixed;
             top: 0;
@@ -64,23 +65,22 @@
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
             letter-spacing: 1px;
             text-decoration: none;
             color: var(--text-primary);
+            position: relative;
+        }
+        
+        .logo span {
+            color: var(--accent);
         }
 
-        .logo img {
-            height: 40px;
-            transition: var(--transition);
-        }
-
-        .logo:hover img {
-            transform: scale(1.1) rotate(-5deg);
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 35px;
         }
 
         .nav-links {
@@ -116,39 +116,33 @@
             color: var(--accent);
         }
 
-        .hero {
-            min-height: 100vh;
+        .lang-switch {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 100px 5% 50px;
-            background: radial-gradient(circle at 50% 30%, rgba(99, 102, 241, 0.15) 0%, rgba(10, 10, 12, 1) 50%);
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .hero h1 {
-            font-size: clamp(40px, 6vw, 72px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin: 0 auto 20px auto;
-            max-width: 900px;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: clamp(16px, 2vw, 20px);
+        .lang-btn {
+            background: none;
+            border: none;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 40px auto;
-            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px 8px;
+            border-radius: 15px;
         }
 
+        .lang-btn.active {
+            color: #fff;
+            background: var(--accent);
+        }
+
+        /* Buttons */
         .btn {
             padding: 16px 32px;
             border-radius: 50px;
@@ -189,6 +183,126 @@
             color: var(--text-primary);
         }
 
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 5% 50px;
+            background: radial-gradient(circle at 50% 30%, rgba(99, 102, 241, 0.15) 0%, rgba(10, 10, 12, 1) 50%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0 auto 20px auto;
+            max-width: 900px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            text-align: center;
+        }
+
+        .bg-shapes {
+            position: absolute;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .shape-1 { width: 300px; height: 300px; background: rgba(99, 102, 241, 0.2); top: 10%; left: 10%; }
+        .shape-2 { width: 400px; height: 400px; background: rgba(168, 85, 247, 0.15); bottom: 10%; right: 5%; animation-delay: -5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 5%;
+            text-align: center;
+        }
+        
+        .about-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 40px;
+            border-radius: var(--radius);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .about-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 50%);
+            animation: rotateGlow 15s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes rotateGlow {
+            100% { transform: rotate(360deg); }
+        }
+
+        .about-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-card h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-card p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Portfolio */
         .section-title {
             text-align: center;
             font-size: 40px;
@@ -295,6 +409,7 @@
             line-height: 1.3;
         }
 
+        /* Testimonials */
         .testimonials {
             padding: 100px 5%;
             background: linear-gradient(to bottom, var(--bg-color), var(--surface-color));
@@ -354,16 +469,17 @@
         }
 
         .testi-avatar {
-            width: 55px;
-            height: 55px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #a855f7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 800;
-            font-size: 22px;
-            color: #fff;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .testi-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .testi-info h4 {
@@ -381,6 +497,7 @@
             font-weight: 600;
         }
 
+        /* Contact Section */
         .contact-section {
             padding: 100px 5%;
             text-align: center;
@@ -414,6 +531,7 @@
             background: var(--surface-color);
         }
 
+        /* Modal */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -518,28 +636,45 @@
 
     <nav>
         <a href="#" class="logo">
-            <img src="logo.PNG" alt="Shaden Studio" onerror="this.style.display='none'"> 
-            Shaden Studio
+            Shaden<span>Studio</span>
         </a>
-        <div class="nav-links">
-            <a href="#portfolio">Work</a>
-            <a href="#testimonials">Reviews</a>
-            <a href="#contact" class="btn btn-primary" style="padding: 10px 24px;">Start Project</a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#about" data-i18n="navAbout">About</a>
+                <a href="#portfolio" data-i18n="navWork">Work</a>
+                <a href="#testimonials" data-i18n="navReviews">Reviews</a>
+            </div>
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ua">UA</button>
+            </div>
+            <a href="#contact" class="btn btn-primary" style="padding: 10px 24px; margin-left: 15px;" data-i18n="navStart">Start Project</a>
         </div>
     </nav>
 
     <section class="hero">
-        <div data-aos="fade-up" data-aos-duration="1000">
-            <h1>We craft videos that <span>hook & convert</span></h1>
-            <p>High-end post-production for YouTube creators and businesses. We turn your raw footage into engaging masterpieces that drive views and sales.</p>
-            <a href="#portfolio" class="btn btn-primary" style="margin-top: 10px;">
+        <div class="bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+        <div data-aos="zoom-in" data-aos-duration="1000">
+            <h1 data-i18n="heroTitle">We craft videos that <span>hook & convert</span></h1>
+            <p data-i18n="heroDesc">High-end post-production for YouTube creators and businesses. We turn your raw footage into engaging masterpieces that drive views and sales.</p>
+            <a href="#portfolio" class="btn btn-primary" style="margin-top: 10px;" data-i18n="heroBtn">
                 View Our Work <i class="fa-solid fa-arrow-down" style="margin-left: 8px;"></i>
             </a>
         </div>
     </section>
 
+    <section class="about-section" id="about">
+        <div class="about-card" data-aos="fade-up">
+            <h2 data-i18n="aboutTitle">About Shaden</h2>
+            <p data-i18n="aboutDesc">We help creators and brands grow through powerful video content. You bring the vision and the footage; we handle the editing, post-production, and everything that keeps your videos engaging.</p>
+        </div>
+    </section>
+
     <section class="portfolio" id="portfolio">
-        <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="portTitle">Featured Projects</h2>
         
         <div class="portfolio-grid">
             
@@ -599,53 +734,53 @@
     </section>
 
     <section class="testimonials" id="testimonials">
-        <h2 class="section-title" data-aos="fade-up">Client Success</h2>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="testiTitle">Client Success</h2>
         
         <div class="testi-grid">
             
-            <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
-                <p class="testi-quote">"Shaden Studio completely transformed our documentaries. The editing is top-notch, keeping our audience hooked from the first second to the last!"</p>
+            <div class="testi-card" data-aos="fade-right" data-aos-delay="100">
+                <p class="testi-quote" data-i18n="q1">"Shaden Studio completely transformed our documentaries. The editing is top-notch, keeping our audience hooked from the first second to the last!"</p>
                 <div class="testi-author">
-                    <div class="testi-avatar">B</div>
+                    <div class="testi-avatar"><img src="1.jpg" alt="Big Car"></div>
                     <div class="testi-info">
                         <h4>Big Car</h4>
-                        <p>Automotive Channel</p>
+                        <p data-i18n="sub_auto">Automotive Channel</p>
                         <span>286,000 Subscribers</span>
                     </div>
                 </div>
             </div>
 
-            <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
-                <p class="testi-quote">"Absolutely stunning post-production! They perfectly captured the vibe of our adventures. Highly recommended to any creator looking to level up."</p>
+            <div class="testi-card" data-aos="fade-left" data-aos-delay="200">
+                <p class="testi-quote" data-i18n="q2">"Absolutely stunning post-production! They perfectly captured the vibe of our adventures. Highly recommended to any creator looking to level up."</p>
                 <div class="testi-author">
-                    <div class="testi-avatar">H</div>
+                    <div class="testi-avatar"><img src="3.jpg" alt="Happy To Wander"></div>
                     <div class="testi-info">
                         <h4>Happy To Wander</h4>
-                        <p>Travel Channel</p>
+                        <p data-i18n="sub_travel">Travel Channel</p>
                         <span>202,000 Subscribers</span>
                     </div>
                 </div>
             </div>
 
-            <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
-                <p class="testi-quote">"Our finance videos need to be dynamic to keep viewers engaged. Shaden Studio delivered exactly what we needed to grow our channel rapidly."</p>
+            <div class="testi-card" data-aos="fade-right" data-aos-delay="300">
+                <p class="testi-quote" data-i18n="q3">"Our finance videos need to be dynamic to keep viewers engaged. Shaden Studio delivered exactly what we needed to grow our channel rapidly."</p>
                 <div class="testi-author">
-                    <div class="testi-avatar">M</div>
+                    <div class="testi-avatar"><img src="4.jpg" alt="Make That Change"></div>
                     <div class="testi-info">
                         <h4>Make That Change</h4>
-                        <p>Finance Channel</p>
+                        <p data-i18n="sub_fin">Finance Channel</p>
                         <span>133,000 Subscribers</span>
                     </div>
                 </div>
             </div>
 
-            <div class="testi-card" data-aos="fade-up" data-aos-delay="400">
-                <p class="testi-quote">"The action looks so much better now. Fast turnarounds and incredible motion graphics that fit our extreme sports content perfectly."</p>
+            <div class="testi-card" data-aos="fade-left" data-aos-delay="400">
+                <p class="testi-quote" data-i18n="q4">"The action looks so much better now. Fast turnarounds and incredible motion graphics that fit our extreme sports content perfectly."</p>
                 <div class="testi-author">
-                    <div class="testi-avatar">T</div>
+                    <div class="testi-avatar"><img src="2.jpg" alt="Tae Kwon Do Fury"></div>
                     <div class="testi-info">
                         <h4>Tae Kwon Do Fury</h4>
-                        <p>Sports Channel</p>
+                        <p data-i18n="sub_sport">Sports Channel</p>
                         <span>108,000 Subscribers</span>
                     </div>
                 </div>
@@ -656,13 +791,13 @@
 
     <section class="contact-section" id="contact">
         <div data-aos="zoom-in">
-            <h2>Ready to elevate your videos?</h2>
-            <p>Let's discuss your project and create high-quality content together.</p>
+            <h2 data-i18n="contactTitle">Ready to elevate your videos?</h2>
+            <p data-i18n="contactDesc">Let's discuss your project and create high-quality content together.</p>
             <div class="contact-buttons">
-                <a href="mailto:shaden.editors@gmail.com" class="btn btn-primary">
+                <a href="mailto:shaden.editors@gmail.com" class="btn btn-primary" data-i18n="emailBtn">
                     <i class="fa-solid fa-envelope"></i> Email Us
                 </a>
-                <a href="https://t.me/shaden_nnn" target="_blank" class="btn btn-social">
+                <a href="https://t.me/shaden_nnn" target="_blank" class="btn btn-social" data-i18n="tgBtn">
                     <i class="fa-brands fa-telegram"></i> Telegram
                 </a>
             </div>
@@ -670,7 +805,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 Shaden Studio. All Rights Reserved.</p>
+        <p data-i18n="footerText">&copy; 2026 Shaden Studio. All Rights Reserved.</p>
     </footer>
 
     <div class="modal" id="videoModal">
@@ -686,19 +821,90 @@
                 <iframe id="modalIframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="modal-footer">
-                <a id="modalExternalLink" href="#" target="_blank">Відкрити відео на YouTube ↗</a>
+                <a id="modalExternalLink" href="#" target="_blank" data-i18n="modalLink">Open video on YouTube ↗</a>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Init animations (once: false allows repeating on scroll)
         AOS.init({
             duration: 800,
-            once: true,
+            once: false, 
             offset: 50
         });
 
+        // Translations Dictionary
+        const translations = {
+            en: {
+                navAbout: "About", navWork: "Work", navReviews: "Reviews", navStart: "Start Project",
+                heroTitle: "We craft videos that <span>hook & convert</span>",
+                heroDesc: "High-end post-production for YouTube creators and businesses. We turn your raw footage into engaging masterpieces that drive views and sales.",
+                heroBtn: 'View Our Work <i class="fa-solid fa-arrow-down" style="margin-left: 8px;"></i>',
+                aboutTitle: "About Shaden",
+                aboutDesc: "We help creators and brands grow through powerful video content. You bring the vision and the footage; we handle the editing, post-production, and everything that keeps your videos engaging.",
+                portTitle: "Featured Projects",
+                testiTitle: "Client Success",
+                contactTitle: "Ready to elevate your videos?",
+                contactDesc: "Let's discuss your project and create high-quality content together.",
+                emailBtn: '<i class="fa-solid fa-envelope"></i> Email Us',
+                tgBtn: '<i class="fa-brands fa-telegram"></i> Telegram',
+                modalLink: "Open video on YouTube ↗",
+                q1: '"Shaden Studio completely transformed our documentaries. The editing is top-notch, keeping our audience hooked from the first second to the last!"',
+                q2: '"Absolutely stunning post-production! They perfectly captured the vibe of our adventures. Highly recommended to any creator looking to level up."',
+                q3: '"Our finance videos need to be dynamic to keep viewers engaged. Shaden Studio delivered exactly what we needed to grow our channel rapidly."',
+                q4: '"The action looks so much better now. Fast turnarounds and incredible motion graphics that fit our extreme sports content perfectly."',
+                sub_auto: "Automotive Channel",
+                sub_travel: "Travel Channel",
+                sub_fin: "Finance Channel",
+                sub_sport: "Sports Channel",
+                footerText: "&copy; 2026 Shaden Studio. All Rights Reserved."
+            },
+            ua: {
+                navAbout: "Про нас", navWork: "Роботи", navReviews: "Відгуки", navStart: "Почати проєкт",
+                heroTitle: "Створюємо відео, які <span>залучають та продають</span>",
+                heroDesc: "Топовий пост-продакшн для YouTube-креаторів та бізнесу. Перетворюємо ваші вихідники на шедеври, що приносять перегляди та продажі.",
+                heroBtn: 'Дивитись роботи <i class="fa-solid fa-arrow-down" style="margin-left: 8px;"></i>',
+                aboutTitle: "Про Shaden",
+                aboutDesc: "Ми допомагаємо кріейторам та брендам зростати завдяки потужному відеоконтенту. Ви даєте бачення та матеріали; ми беремо на себе монтаж, пост-продакшн і все, що робить ваше відео крутим.",
+                portTitle: "Наші роботи",
+                testiTitle: "Відгуки клієнтів",
+                contactTitle: "Готові вивести відео на новий рівень?",
+                contactDesc: "Давайте обговоримо ваш проєкт та створимо якісний контент разом.",
+                emailBtn: '<i class="fa-solid fa-envelope"></i> Написати на Email',
+                tgBtn: '<i class="fa-brands fa-telegram"></i> Telegram',
+                modalLink: "Відкрити відео на YouTube ↗",
+                q1: '"Shaden Studio повністю змінили наші документалки. Монтаж на вищому рівні, тримає аудиторію з першої до останньої секунди!"',
+                q2: '"Абсолютно приголомшливий пост-продакшн! Вони ідеально передали атмосферу наших пригод. Дуже рекомендуємо всім."',
+                q3: '"Наші фінансові відео мають бути динамічними. Shaden Studio зробили саме те, що було потрібно для швидкого росту каналу."',
+                q4: '"Екшн виглядає набагато краще! Швидка робота та неймовірна графіка, що ідеально пасує нашому екстремальному контенту."',
+                sub_auto: "Автомобільний канал",
+                sub_travel: "Тревел канал",
+                sub_fin: "Фінансовий канал",
+                sub_sport: "Спортивний канал",
+                footerText: "&copy; 2026 Shaden Studio. Всі права захищено."
+            }
+        };
+
+        // Language Switcher Logic
+        const langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const lang = btn.getAttribute('data-lang');
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if(translations[lang][key]) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+            });
+        });
+
+        // Modal Logic
         const cards = document.querySelectorAll('.card');
         const modal = document.getElementById('videoModal');
         const closeModalBtn = document.getElementById('closeModal');
@@ -717,7 +923,6 @@
                 modalCat.textContent = category;
                 
                 iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
-                
                 externalLink.href = `https://youtu.be/${videoId}`;
                 
                 modal.classList.add('active');
