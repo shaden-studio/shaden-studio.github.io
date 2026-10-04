@@ -62,6 +62,11 @@
             backdrop-filter: blur(10px);
             z-index: 100;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        nav.nav-hidden {
+            transform: translateY(-100%);
         }
 
         .logo {
@@ -142,6 +147,33 @@
             background: var(--accent);
         }
 
+        /* Кнопка меню (бургер) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 32px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
         /* Buttons */
         .btn {
             padding: 16px 32px;
@@ -168,6 +200,11 @@
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 15px 40px -10px var(--accent);
             color: #fff;
+        }
+
+        .start-project-btn {
+            padding: 10px 24px;
+            margin-left: 15px;
         }
 
         .btn-social {
@@ -641,23 +678,66 @@
             text-decoration: underline;
         }
 
+        /* Mobile Styles */
         @media(max-width: 900px) {
             .portfolio-grid, .testi-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-right {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--bg-color);
+                flex-direction: column;
+                justify-content: center;
+                gap: 40px;
+                transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 100;
+            }
+
+            .nav-right.active {
+                right: 0;
+            }
+
             .nav-links {
-                display: none;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                font-size: 24px;
+            }
+
+            .lang-switch {
+                margin: 0 auto;
+            }
+
+            .start-project-btn {
+                margin-left: 0;
+                padding: 15px 40px;
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
 
-    <nav>
+    <nav id="navbar">
         <a href="#" class="logo">
             Shaden<span>Studio</span>
         </a>
-        <div class="nav-right">
+        
+        <button class="menu-toggle" id="mobile-menu-btn">
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-right" id="nav-right">
             <div class="nav-links">
                 <a href="#about" data-i18n="navAbout">About</a>
                 <a href="#portfolio" data-i18n="navWork">Work</a>
@@ -667,7 +747,7 @@
                 <button class="lang-btn active" data-lang="en">EN</button>
                 <button class="lang-btn" data-lang="ua">UA</button>
             </div>
-            <a href="#contact" class="btn btn-primary" style="padding: 10px 24px; margin-left: 15px;" data-i18n="navStart">Start Project</a>
+            <a href="#contact" class="btn btn-primary start-project-btn" data-i18n="navStart">Start Project</a>
         </div>
     </nav>
 
@@ -852,14 +932,12 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Init animations (once: false allows repeating on scroll)
         AOS.init({
             duration: 800,
             once: false, 
             offset: 50
         });
 
-        // Translations Dictionary
         const translations = {
             en: {
                 navAbout: "About", navWork: "Work", navReviews: "Reviews", navStart: "Start Project",
@@ -911,7 +989,6 @@
             }
         };
 
-        // Language Switcher Logic
         const langBtns = document.querySelectorAll('.lang-btn');
         langBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -928,7 +1005,6 @@
             });
         });
 
-        // Modal Logic
         const cards = document.querySelectorAll('.card');
         const modal = document.getElementById('videoModal');
         const closeModalBtn = document.getElementById('closeModal');
@@ -946,7 +1022,8 @@
                 modalTitle.textContent = title;
                 modalCat.textContent = category;
                 
-                iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+                // ОНОВЛЕНИЙ РЯДОК: Додано параметри modestbranding=1 та iv_load_policy=3
+                iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3`;
                 externalLink.href = `https://youtu.be/${videoId}`;
                 
                 modal.classList.add('active');
@@ -972,6 +1049,46 @@
             if(e.key === 'Escape' && modal.classList.contains('active')) {
                 closeModal();
             }
+        });
+
+        // 1. Смарт Навігація (ховається при скролі)
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.classList.add('nav-hidden');
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        // 2. Мобільне меню (бургер)
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const navRight = document.getElementById('nav-right');
+        const navAllLinks = document.querySelectorAll('.nav-right a');
+
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            navRight.classList.toggle('active');
+            
+            if(navRight.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // 3. Закриваємо мобільне меню при кліку на будь-який лінк
+        navAllLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('active');
+                navRight.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
         });
     </script>
 </body>
